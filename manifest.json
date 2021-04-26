@@ -1,0 +1,17 @@
+{
+    "name": "Youtube Volume Mouse Control",
+    "description": "",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": ["storage"],
+    "content_scripts": [{
+        "matches": ["*://*.youtube.com/*"],
+        "js": ["injector.js"]
+    }],
+    "web_accessible_resources": [
+        {
+            "resources": ["volumeControl.js"],
+            "matches": ["*://*.youtube.com/*"]
+        }
+    ]
+}
