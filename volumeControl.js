@@ -1,21 +1,31 @@
 const STORAGE_ID = "yvmc-volume";
-const player = document.getElementById("movie_player");
-const video = player.querySelector("video");
+let player = null, video = null, volumeDisplay = null;
+init();
 
-const volumeDisplay = {
-    element: buildVolumeDisplay(),
-    timer: null
+
+function init() {
+    player = document.getElementById("movie_player");
+    if(!player) {
+        setTimeout(init, 1000);
+        return;
+    }
+    console.log(player);
+    video = player.querySelector("video");
+
+    volumeDisplay = {
+        element: buildVolumeDisplay(),
+        timer: null
+    }
+    player.prepend(volumeDisplay.element);
+    
+    video.onvolumechange = saveVolume;
+    video.onwheel = e => {
+        changeVolume(e);
+        displayVolume();
+    }
+    
+    loadVolume();
 }
-player.prepend(volumeDisplay.element);
-
-video.onvolumechange = saveVolume;
-video.onwheel = e => {
-    changeVolume(e);
-    displayVolume();
-}
-
-loadVolume();
-
 
 function changeVolume(e) {
     e.preventDefault();
